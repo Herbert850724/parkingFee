@@ -1,6 +1,7 @@
 package com.tdd;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -9,14 +10,38 @@ import java.time.LocalDateTime;
 @SpringBootTest
 class ParkingApplicationTests {
 
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+    private Long actual;
+    private ParkingFeeCalculator pfc;
+
+    @BeforeEach
+    void setUp(){
+        pfc = new ParkingFeeCalculator();
+    }
     private void runTest(String start,String end,Long expect){
         ParkingFeeCalculator pfc = new ParkingFeeCalculator();
 
-        Long actual = pfc.calculate(
-                LocalDateTime.parse(start)
-                ,LocalDateTime.parse(end));
+        parkingStartAt(start);
+        parkingEndAt(end);
 
-        Assertions.assertThat(actual).isEqualTo(expect);
+        calculated();
+        shouldPay(expect);
+    }
+
+    private void parkingStartAt(String start){
+        startTime = LocalDateTime.parse(start);
+    }
+    private void parkingEndAt(String end){
+        endTime = LocalDateTime.parse(end);
+    }
+
+    private void calculated(){
+        actual = pfc.calculate(startTime,endTime);
+    }
+
+    private void shouldPay(Long expect){
+
     }
 
     @Test
