@@ -1,26 +1,48 @@
 package com.tdd;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 public class ParkingFeeCalculator {
 
-    public Long calculate(LocalDateTime start,LocalDateTime end){
+    private Duration THIRTY_MINUTES = Duration.ofMinutes(30L);
+    private Duration FIFTY_MINUTES = Duration.ofMinutes(15L);
+    public Long calculate(LocalDateTime start,LocalDateTime end) {
 
-        long minsBetween = ChronoUnit.MINUTES.between(start, end);
-        if(minsBetween<15){
+
+        Duration duration = Duration.between(start, end);
+        if (isShort(duration)) {
             return 0L;
         }
+        if(start.toLocalDate().equals(end.toLocalDate())){
+            return getRegularFee(duration);
+        }
+        LocalDateTime todayStart = start.toLocalDate().atStartOfDay();
+        Long totalFee = 0L;
+        while(todayStart.isBefore(end)){
+            totalFee += 150L;
+            todayStart = todayStart.plusDays(1);
+        }
 
-        Long regularFee = getRegularFee(minsBetween);
-        return Math.min(regularFee,150L);
-
+        return totalFee;
     }
 
-    private Long getRegularFee(Long minsBetween){
-        Long periods = minsBetween/30;
-        return (periods+1) * 30L;
+    private boolean isShort(Duration duration){
+        if(duration.compareTo(FIFTY_MINUTES) <= 0){
+            return true;
+        }
+        return false;
     }
 
+    private Long getRegularFee(Duration duration){
+        Long period = BigDecimal.valueOf(duration.toNanos())
+                .divide(BigDecimal.valueOf(THIRTY_MINUTES.toNanos()), RoundingMode.UP)
+                .longValue();
 
+        Long fee = period * 30;
+        return Math.min(fee, 150L);
+    }
 }

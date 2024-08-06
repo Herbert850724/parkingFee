@@ -36,16 +36,16 @@ class ParkingApplicationTests {
 
     @Test
     void freeFor15Min() {
-        parkingStartAt("2024-01-01T00:00:00");
-        parkingEndAt("2024-01-01T00:14:00");
+        parkingStartAt("2024-01-02T00:00:00");
+        parkingEndAt("2024-01-02T00:15:00");
         calculated();
         shouldPay(0L);
     }
 
     @Test
     void feeFor15Min(){
-        parkingStartAt("2024-01-01T00:00:00");
-        parkingEndAt("2024-01-01T00:15:00");
+        parkingStartAt("2024-01-02T00:00:00");
+        parkingEndAt("2024-01-02T00:30:00");
         calculated();
         shouldPay(30L);
 
@@ -53,26 +53,34 @@ class ParkingApplicationTests {
 
     @Test
     void over30under60Fee(){
-        parkingStartAt("2024-01-01T00:00:00");
-        parkingEndAt("2024-01-01T00:45:00");
+        parkingStartAt("2024-01-02T00:00:00");
+        parkingEndAt("2024-01-02T01:00:00");
         calculated();
         shouldPay(60L);
     }
 
     @Test
     void over60under90Fee(){
-        parkingStartAt("2024-01-01T00:00:00");
-        parkingEndAt("2024-01-01T01:00:00");
+        parkingStartAt("2024-01-02T00:00:00");
+        parkingEndAt("2024-01-02T01:30:00");
         calculated();
         shouldPay(90L);
     }
 
     @Test
     void over150Pay150(){
-        parkingStartAt("2024-01-01T00:00:00");
-        parkingEndAt("2024-01-01T18:00:00");
+        parkingStartAt("2024-01-02T00:00:00");
+        parkingEndAt("2024-01-02T18:00:00");
         calculated();
         shouldPay(150L);
+    }
+
+    @Test
+    void anotherDay(){
+        parkingStartAt("2024-01-02T00:00:00");
+        parkingEndAt("2024-01-04T00:00:00");
+        calculated();
+        shouldPay(150L+150L);
     }
 
 }
