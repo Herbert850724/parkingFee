@@ -12,10 +12,15 @@ public class ParkingFeeCalculator {
             return 0L;
         }
 
-        Long periods = minsBetween/30;
-        Long fee = (periods+1) * 30L;
-
-        return fee;
+        Long regularFee = getRegularFee(minsBetween);
+        return Math.min(regularFee,150L);
 
     }
+
+    private Long getRegularFee(Long minsBetween){
+        Long periods = minsBetween/30;
+        return (periods+1) * 30L;
+    }
+
+
 }
