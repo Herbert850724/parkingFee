@@ -11,12 +11,11 @@ public class ParkingFeeCalculator {
         if(minsBetween<15){
             return 0L;
         }
-        if(minsBetween<30){
-            return 30L;
-        }
-        if(minsBetween<60){
-            return 60L;
-        }
-        return 90L;
+
+        Long periods = minsBetween/30;
+        Long fee = (periods+1) * 30L;
+
+        return fee;
+
     }
 }
