@@ -53,8 +53,8 @@ class ParkingApplicationTests {
 
     @Test
     void over30under60Fee(){
-        parkingStartAt("2024-01-02T00:00:00");
-        parkingEndAt("2024-01-02T01:00:00");
+        parkingStartAt("2024-01-02T00:01:00");
+        parkingEndAt("2024-01-02T01:01:00");
         calculated();
         shouldPay(60L);
     }

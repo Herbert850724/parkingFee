@@ -17,9 +17,7 @@ public class ParkingFeeCalculator {
         if (isShort(duration)) {
             return 0L;
         }
-        if(start.toLocalDate().equals(end.toLocalDate())){
-            return getRegularFee(duration);
-        }
+
         LocalDateTime todayStart = start.toLocalDate().atStartOfDay();
         Long totalFee = 0L;
         while(todayStart.isBefore(end)){
@@ -37,7 +35,9 @@ public class ParkingFeeCalculator {
                 Duration todayDuration = Duration.between(todaySessionStart,todaySessionEnd);
                 totalFee += getRegularFee(todayDuration);
 
-            }else{
+            } else if (start.isAfter(todayStart) && end.isBefore(todayStart.plusDays(1L))) {
+                return getRegularFee(duration);
+            } else {
                 totalFee += 150L;
             }
 
