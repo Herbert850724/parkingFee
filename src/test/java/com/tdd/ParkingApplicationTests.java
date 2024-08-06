@@ -45,4 +45,16 @@ class ParkingApplicationTests {
         Assertions.assertThat(actual).isEqualTo(60L);
     }
 
+    @Test
+    void over60under90Fee(){
+        ParkingFeeCalculator pfc = new ParkingFeeCalculator();
+
+        Long actual = pfc.calculate(
+                LocalDateTime.of(2024,1,1,0,0,0)
+                ,LocalDateTime.of(2024,1,1,1,0,0)
+        );
+
+        Assertions.assertThat(actual).isEqualTo(90L);
+    }
+
 }
