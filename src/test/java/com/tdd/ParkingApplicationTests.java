@@ -41,7 +41,7 @@ class ParkingApplicationTests {
     }
 
     private void shouldPay(Long expect){
-
+        Assertions.assertThat(actual).isEqualTo(expect);
     }
 
     @Test
