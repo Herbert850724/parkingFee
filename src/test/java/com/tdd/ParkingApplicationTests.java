@@ -91,4 +91,12 @@ class ParkingApplicationTests {
         shouldPay(30L+150L);
     }
 
+    @Test
+    void wholeDayAndPartialDay(){
+        parkingStartAt("2024-01-02T00:00:00");
+        parkingEndAt("2024-01-03T00:10:00");
+        calculated();
+        shouldPay(150L+30L);
+    }
+
 }

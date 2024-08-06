@@ -24,12 +24,19 @@ public class ParkingFeeCalculator {
         Long totalFee = 0L;
         while(todayStart.isBefore(end)){
 
-            if(start.isAfter(todayStart) && end.isAfter(todayStart.plusDays(1))){
+            if(start.isAfter(todayStart) && end.isAfter(todayStart.plusDays(1L))) {
                 LocalDateTime todaySessionStart = start;
-                LocalDateTime todaySessionEnd = todayStart.plusDays(1);
+                LocalDateTime todaySessionEnd = todayStart.plusDays(1L);
+
+                Duration todayDuration = Duration.between(todaySessionStart, todaySessionEnd);
+                totalFee += getRegularFee(todayDuration);
+            } else if (!start.isAfter(todayStart) && end.isBefore(todayStart.plusDays(1L))) {
+                LocalDateTime todaySessionStart = todayStart;
+                LocalDateTime todaySessionEnd = end;
 
                 Duration todayDuration = Duration.between(todaySessionStart,todaySessionEnd);
                 totalFee += getRegularFee(todayDuration);
+
             }else{
                 totalFee += 150L;
             }
