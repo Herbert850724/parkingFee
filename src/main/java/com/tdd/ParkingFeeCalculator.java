@@ -4,12 +4,12 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
 public class ParkingFeeCalculator {
 
     private Duration THIRTY_MINUTES = Duration.ofMinutes(30L);
     private Duration FIFTY_MINUTES = Duration.ofMinutes(15L);
+
     public Long calculate(LocalDateTime start,LocalDateTime end) {
 
 
@@ -19,29 +19,17 @@ public class ParkingFeeCalculator {
         }
 
         LocalDateTime todayStart = start.toLocalDate().atStartOfDay();
+
         Long totalFee = 0L;
         while(todayStart.isBefore(end)){
+            LocalDateTime tomorrowStart = todayStart.plusDays(1L);
+            LocalDateTime todaySessionStart = start.isAfter(todayStart)?start:todayStart;
+            LocalDateTime todaySessionEnd = end.isBefore(tomorrowStart)?end:tomorrowStart;
 
-            if(start.isAfter(todayStart) && end.isAfter(todayStart.plusDays(1L))) {
-                LocalDateTime todaySessionStart = start;
-                LocalDateTime todaySessionEnd = todayStart.plusDays(1L);
+            Duration todayDuration = Duration.between(todaySessionStart, todaySessionEnd);
+            totalFee += getRegularFee(todayDuration);
 
-                Duration todayDuration = Duration.between(todaySessionStart, todaySessionEnd);
-                totalFee += getRegularFee(todayDuration);
-            } else if (!start.isAfter(todayStart) && end.isBefore(todayStart.plusDays(1L))) {
-                LocalDateTime todaySessionStart = todayStart;
-                LocalDateTime todaySessionEnd = end;
-
-                Duration todayDuration = Duration.between(todaySessionStart,todaySessionEnd);
-                totalFee += getRegularFee(todayDuration);
-
-            } else if (start.isAfter(todayStart) && end.isBefore(todayStart.plusDays(1L))) {
-                return getRegularFee(duration);
-            } else {
-                totalFee += 150L;
-            }
-
-            todayStart = todayStart.plusDays(1);
+            todayStart = tomorrowStart;
         }
 
         return totalFee;
