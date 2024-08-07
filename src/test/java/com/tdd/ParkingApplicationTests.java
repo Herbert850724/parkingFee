@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @SpringBootTest
@@ -15,19 +17,25 @@ class ParkingApplicationTests {
     private Long actual;
     private ParkingFeeCalculator pfc;
 
+
     @BeforeEach
     void setUp(){
         pfc = new ParkingFeeCalculator();
     }
     private void parkingStartAt(String start){
+
         startTime = LocalDateTime.parse(start);
     }
     private void parkingEndAt(String end){
         endTime = LocalDateTime.parse(end);
     }
 
+    private ParkingSession parkingData(){
+        return new ParkingSession(startTime,endTime);
+    }
+
     private void calculated(){
-        actual = pfc.calculate(startTime,endTime);
+        actual = pfc.calculate(parkingData());
     }
 
     private void shouldPay(Long expect){
@@ -97,6 +105,15 @@ class ParkingApplicationTests {
         parkingEndAt("2024-01-03T00:10:00");
         calculated();
         shouldPay(150L+30L);
+    }
+
+    @Test
+    void feeFor15MinHoliday(){
+
+        parkingStartAt("2024-01-06T00:00:00");
+        parkingEndAt("2024-01-06T00:15:01");
+        calculated();
+        shouldPay(50L);
     }
 
 }
