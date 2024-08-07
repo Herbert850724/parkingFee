@@ -5,8 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @SpringBootTest
@@ -108,10 +106,19 @@ class ParkingApplicationTests {
     }
 
     @Test
-    void feeFor15MinHoliday(){
+    void feeFor15MinSaturday(){
 
         parkingStartAt("2024-01-06T00:00:00");
         parkingEndAt("2024-01-06T00:15:01");
+        calculated();
+        shouldPay(50L);
+    }
+
+    @Test
+    void feeFor15MinSunday(){
+
+        parkingStartAt("2024-01-07T00:00:00");
+        parkingEndAt("2024-01-07T00:15:01");
         calculated();
         shouldPay(50L);
     }
