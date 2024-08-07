@@ -5,7 +5,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @SpringBootTest
 class ParkingApplicationTests {
@@ -128,6 +131,13 @@ class ParkingApplicationTests {
         parkingEndAt("2024-01-07T00:00:00");
         calculated();
         shouldPay(2400L);
+    }
+
+    @Test
+    void ddddddd(){
+        LocalDate today = LocalDate.parse("2024-07-24");
+        boolean contains = List.of(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY).contains(today.getDayOfWeek());
+        System.out.println(contains);
     }
 
 }
