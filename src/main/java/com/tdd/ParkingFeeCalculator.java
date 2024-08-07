@@ -45,7 +45,11 @@ public class ParkingFeeCalculator {
                 ? 50
                 : 30;
         Long fee = period * unitPrice;
-        return Math.min(fee, 150L);
+
+        Long dailyLimit = List.of(DayOfWeek.SATURDAY,DayOfWeek.SUNDAY).contains(today.getDayOfWeek())
+                ? 2400L
+                : 100L;
+        return Math.min(fee, dailyLimit);
     }
 
 

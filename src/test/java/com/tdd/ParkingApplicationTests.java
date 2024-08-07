@@ -116,11 +116,18 @@ class ParkingApplicationTests {
 
     @Test
     void feeFor15MinSunday(){
-
         parkingStartAt("2024-01-07T00:00:00");
         parkingEndAt("2024-01-07T00:15:01");
         calculated();
         shouldPay(50L);
+    }
+
+    @Test
+    void saturdayAndSundayNoLimit(){
+        parkingStartAt("2024-01-06T00:00:00");
+        parkingEndAt("2024-01-07T00:00:00");
+        calculated();
+        shouldPay(2400L);
     }
 
 }
