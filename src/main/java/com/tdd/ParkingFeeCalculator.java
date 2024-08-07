@@ -10,7 +10,9 @@ public class ParkingFeeCalculator {
     private Duration FIFTY_MINUTES = Duration.ofMinutes(15L);
 
     public ParkingFeeCalculator() {
-        priceBook = new PriceBook();
+
+        PriceBookRepository priceBookRepository = new PriceBookRepository(new PriceBook());
+        priceBook = priceBookRepository.getPriceBook();
     }
 
     public Long calculate(ParkingSession parkingSession) {
@@ -20,18 +22,10 @@ public class ParkingFeeCalculator {
         if (isShort(duration)) {
             return 0L;
         }
-//        Long totalFee = 0L;
-//
           List<DailySession> dailySessions = parkingSession.getDailySessions();
-//        for(DailySession dailySession : dailySessions){
-//            totalFee += holidayBook.getDailyFee(dailySession);
-//        }
-//        return totalFee;
 
         return dailySessions.stream().mapToLong(priceBook::getDailyFee).sum();
     }
-
-
 
     private boolean isShort(Duration duration){
 
