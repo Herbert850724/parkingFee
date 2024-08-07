@@ -8,9 +8,13 @@ import java.util.List;
 
 public class ParkingFeeCalculator {
 
-    private final HolidayBook holidayBook = new HolidayBook();
-    private Duration THIRTY_MINUTES = Duration.ofMinutes(30L);
+    private final HolidayBook holidayBook;
+
     private Duration FIFTY_MINUTES = Duration.ofMinutes(15L);
+
+    public ParkingFeeCalculator() {
+        holidayBook = new HolidayBook();
+    }
 
     public Long calculate(ParkingSession parkingSession) {
 
@@ -23,8 +27,7 @@ public class ParkingFeeCalculator {
 
         List<DailySession> dailySessions = parkingSession.getDailySessions();
         for(DailySession dailySession : dailySessions){
-            Long todayFee = getRegularFee(dailySession);
-            totalFee += todayFee;
+            totalFee += holidayBook.getDailyFee(dailySession);
         }
         return totalFee;
     }
@@ -36,21 +39,9 @@ public class ParkingFeeCalculator {
         return duration.compareTo(FIFTY_MINUTES) <= 0;
     }
 
-    private Long getRegularFee(DailySession dailySession){
-        Long period = BigDecimal.valueOf(dailySession.getTodayDuration().toNanos())
-                .divide(BigDecimal.valueOf(THIRTY_MINUTES.toNanos()), RoundingMode.UP)
-                .longValue();
 
-        int unitPrice = holidayBook.isHoliday(dailySession.getToday())
-                ? 50
-                : 30;
-        Long fee = period * unitPrice;
 
-        Long dailyLimit = holidayBook.isHoliday(dailySession.getToday())
-                ? 2400L
-                : 150L;
-        return Math.min(fee, dailyLimit);
-    }
+
 
 
 

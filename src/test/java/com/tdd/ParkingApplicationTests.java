@@ -134,6 +134,14 @@ class ParkingApplicationTests {
     }
 
     @Test
+    void nationalHoliday15MinsFee(){
+        parkingStartAt("2024-01-01T00:00:00");
+        parkingEndAt("2024-01-01T00:15:01");
+        calculated();
+        shouldPay(50L);
+    }
+
+    @Test
     void ddddddd(){
         LocalDate today = LocalDate.parse("2024-07-24");
         boolean contains = List.of(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY).contains(today.getDayOfWeek());
