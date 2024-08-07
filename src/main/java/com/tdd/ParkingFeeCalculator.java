@@ -1,19 +1,16 @@
 package com.tdd;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.util.List;
 
 public class ParkingFeeCalculator {
 
-    private final HolidayBook holidayBook;
+    private final PriceBook priceBook;
 
     private Duration FIFTY_MINUTES = Duration.ofMinutes(15L);
 
     public ParkingFeeCalculator() {
-        holidayBook = new HolidayBook();
+        priceBook = new PriceBook();
     }
 
     public Long calculate(ParkingSession parkingSession) {
@@ -23,13 +20,15 @@ public class ParkingFeeCalculator {
         if (isShort(duration)) {
             return 0L;
         }
-        Long totalFee = 0L;
+//        Long totalFee = 0L;
+//
+          List<DailySession> dailySessions = parkingSession.getDailySessions();
+//        for(DailySession dailySession : dailySessions){
+//            totalFee += holidayBook.getDailyFee(dailySession);
+//        }
+//        return totalFee;
 
-        List<DailySession> dailySessions = parkingSession.getDailySessions();
-        for(DailySession dailySession : dailySessions){
-            totalFee += holidayBook.getDailyFee(dailySession);
-        }
-        return totalFee;
+        return dailySessions.stream().mapToLong(priceBook::getDailyFee).sum();
     }
 
 

@@ -9,8 +9,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class HolidayBook {
-    public HolidayBook() {
+public class PriceBook {
+    public PriceBook() {
         nationalHolidays.add(LocalDate.of(2024,01,01));
     }
     private Duration THIRTY_MINUTES = Duration.ofMinutes(30L);
