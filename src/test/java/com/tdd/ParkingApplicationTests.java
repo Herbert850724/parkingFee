@@ -16,12 +16,12 @@ class ParkingApplicationTests {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private Long actual;
-    private ParkingFeeCalculator pfc;
+    private CalculateParkingFeeService pfc;
 
 
     @BeforeEach
     void setUp(){
-        pfc = new ParkingFeeCalculator();
+        pfc = new CalculateParkingFeeService(new PriceBookRepositoryImpl(new PriceBook()),new ParkingSessionRepositoryImpl());
     }
     private void parkingStartAt(String start){
 
