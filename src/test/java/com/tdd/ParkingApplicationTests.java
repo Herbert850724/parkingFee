@@ -17,11 +17,12 @@ class ParkingApplicationTests {
     private LocalDateTime endTime;
     private Long actual;
     private CalculateParkingFeeService pfc;
+    private ParkingSessionRepository parkingSessionRepository = new ParkingSessionRepositoryImpl();
 
 
     @BeforeEach
     void setUp(){
-        pfc = new CalculateParkingFeeService(new PriceBookRepositoryImpl(new PriceBook()),new ParkingSessionRepositoryImpl());
+        pfc = new CalculateParkingFeeService(new PriceBookRepositoryImpl(new PriceBook()),parkingSessionRepository);
     }
     private void parkingStartAt(String start){
 
@@ -29,14 +30,11 @@ class ParkingApplicationTests {
     }
     private void parkingEndAt(String end){
         endTime = LocalDateTime.parse(end);
-    }
-
-    private ParkingSession parkingData(){
-        return new ParkingSession(startTime,endTime);
+        parkingSessionRepository.save(new ParkingSession(startTime,endTime));
     }
 
     private void calculated(){
-        actual = pfc.calculate(parkingData());
+        actual = pfc.calculate();
     }
 
     private void shouldPay(Long expect){

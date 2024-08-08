@@ -11,7 +11,6 @@ public class CalculateParkingFeeService {
 
     public CalculateParkingFeeService() {
 
-//      priceBook = new PriceBook();
         priceBookRepository = priceBookRepository;
 
     }
@@ -21,10 +20,9 @@ public class CalculateParkingFeeService {
         this.parkingSessionRepository = parkingSessionRepository;
     }
 
-    public Long calculate(ParkingSession pSession) {
+    public Long calculate() {
 
-        ParkingSessionRepository parkingSessionRepository = new ParkingSessionRepositoryImpl();
-        parkingSessionRepository.save(pSession);
+
         ParkingSession parkingSession = parkingSessionRepository.find();
 
         PriceBook priceBook = priceBookRepository.getPriceBook();
