@@ -12,7 +12,7 @@ public class ParkingSessionRepositoryImpl implements ParkingSessionRepository {
     }
 
     @Override
-    public ParkingSession find() {
+    public ParkingSession find(String plate) {
         return parkingSession;
     }
 }

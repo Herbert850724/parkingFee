@@ -24,11 +24,11 @@ class ParkingApplicationTests {
     }
     private void parkingStartAt(String start){
 
-        parkingSessionRepository.save(new ParkingSession(LocalDateTime.parse(start),null));
+        parkingSessionRepository.save(new ParkingSession("ABC-8888",LocalDateTime.parse(start),null));
     }
     private void parkingEndAt(String end){
 
-        ParkingSession parkingSession = parkingSessionRepository.find();
+        ParkingSession parkingSession = parkingSessionRepository.find("ABC-8888");
         parkingSession.setEnd(LocalDateTime.parse(end));
         parkingSessionRepository.save(parkingSession);
     }

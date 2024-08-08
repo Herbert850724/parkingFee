@@ -12,6 +12,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public final class ParkingSession {
+    private final String plate;
     private final LocalDateTime start;
     private LocalDateTime end;
 

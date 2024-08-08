@@ -4,5 +4,5 @@ public interface
 ParkingSessionRepository {
     void save(ParkingSession pSession);
 
-    ParkingSession find();
+    ParkingSession find(String plate);
 }
