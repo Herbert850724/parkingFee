@@ -146,11 +146,6 @@ class ParkingApplicationTests {
         calculated(null);
         shouldPay(0L);
     }
-    @Test
-    void ddddddd(){
-        LocalDate today = LocalDate.parse("2024-07-24");
-        boolean contains = List.of(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY).contains(today.getDayOfWeek());
-        System.out.println(contains);
-    }
+
 
 }
