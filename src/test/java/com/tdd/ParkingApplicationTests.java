@@ -25,12 +25,14 @@ class ParkingApplicationTests {
         pfc = new CalculateParkingFeeService(new PriceBookRepositoryImpl(new PriceBook()),parkingSessionRepository);
     }
     private void parkingStartAt(String start){
-
         startTime = LocalDateTime.parse(start);
+        parkingSessionRepository.save(new ParkingSession(startTime,null));
     }
     private void parkingEndAt(String end){
         endTime = LocalDateTime.parse(end);
-        parkingSessionRepository.save(new ParkingSession(startTime,endTime));
+        ParkingSession parkingSession = parkingSessionRepository.find();
+        parkingSession.setEnd(endTime);
+        parkingSessionRepository.save(parkingSession);
     }
 
     private void calculated(){

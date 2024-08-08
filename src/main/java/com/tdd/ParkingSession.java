@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public final class ParkingSession {
     private final LocalDateTime start;
-    private final LocalDateTime end;
+    private LocalDateTime end;
 
     List<DailySession> getDailySessions() {
         List<Duration> durations = new ArrayList<>();
