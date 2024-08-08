@@ -5,7 +5,6 @@ import java.util.Map;
 
 public class ParkingSessionRepositoryImpl implements ParkingSessionRepository {
 
-    private ParkingSession parkingSession;
     private Map<String,ParkingSession> parkingSessions = new HashMap<>();
     public ParkingSessionRepositoryImpl() {
     }

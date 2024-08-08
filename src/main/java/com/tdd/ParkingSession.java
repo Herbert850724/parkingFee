@@ -40,4 +40,12 @@ public final class ParkingSession {
     Duration getTotalDuration(){
         return Duration.between(getStart(), getEnd());
     }
+
+    public static ParkingSession start(String start, String plate){
+        return new ParkingSession(plate,LocalDateTime.parse(start),null);
+    }
+
+    public void end(LocalDateTime endTime){
+        end = endTime;
+    }
 }
