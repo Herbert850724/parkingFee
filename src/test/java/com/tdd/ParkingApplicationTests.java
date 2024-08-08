@@ -13,8 +13,6 @@ import java.util.List;
 @SpringBootTest
 class ParkingApplicationTests {
 
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
     private Long actual;
     private CalculateParkingFeeService pfc;
     private ParkingSessionRepository parkingSessionRepository = new ParkingSessionRepositoryImpl();
@@ -25,13 +23,13 @@ class ParkingApplicationTests {
         pfc = new CalculateParkingFeeService(new PriceBookRepositoryImpl(new PriceBook()),parkingSessionRepository);
     }
     private void parkingStartAt(String start){
-        startTime = LocalDateTime.parse(start);
-        parkingSessionRepository.save(new ParkingSession(startTime,null));
+
+        parkingSessionRepository.save(new ParkingSession(LocalDateTime.parse(start),null));
     }
     private void parkingEndAt(String end){
-        endTime = LocalDateTime.parse(end);
+
         ParkingSession parkingSession = parkingSessionRepository.find();
-        parkingSession.setEnd(endTime);
+        parkingSession.setEnd(LocalDateTime.parse(end));
         parkingSessionRepository.save(parkingSession);
     }
 
