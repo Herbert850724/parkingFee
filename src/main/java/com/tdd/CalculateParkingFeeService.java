@@ -20,10 +20,10 @@ public class CalculateParkingFeeService {
         this.parkingSessionRepository = parkingSessionRepository;
     }
 
-    public Long calculate() {
+    public Long calculate(String plate) {
 
 
-        ParkingSession parkingSession = parkingSessionRepository.find("ABC-8888");
+        ParkingSession parkingSession = parkingSessionRepository.find(plate);
 
         PriceBook priceBook = priceBookRepository.getPriceBook();
 
