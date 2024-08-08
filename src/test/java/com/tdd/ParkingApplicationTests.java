@@ -140,6 +140,14 @@ class ParkingApplicationTests {
     }
 
     @Test
+    void anotherCar(){
+
+        parkingStartAt("2024-01-06T00:00:00", "ABC-8888");
+        carDriveOut("2024-01-06T00:15:01","ABC-8888");
+        calculated(null);
+        shouldPay(0L);
+    }
+    @Test
     void ddddddd(){
         LocalDate today = LocalDate.parse("2024-07-24");
         boolean contains = List.of(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY).contains(today.getDayOfWeek());

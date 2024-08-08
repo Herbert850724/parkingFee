@@ -24,6 +24,9 @@ public class CalculateParkingFeeService {
 
 
         ParkingSession parkingSession = parkingSessionRepository.find(plate);
+        if(parkingSession == null){
+            return 0L;
+        }
 
         PriceBook priceBook = priceBookRepository.getPriceBook();
 
