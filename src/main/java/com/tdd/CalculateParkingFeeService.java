@@ -35,7 +35,7 @@ public class CalculateParkingFeeService {
         if (isShort(duration)) {
             return 0L;
         }
-          List<DailySession> dailySessions = parkingSession.getDailySessions();
+        List<DailySession> dailySessions = parkingSession.getDailySessions();
 
         return dailySessions.stream().mapToLong(priceBook::getDailyFee).sum();
     }

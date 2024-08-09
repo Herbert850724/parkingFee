@@ -13,7 +13,6 @@ class ParkingApplicationTests {
     private CalculateParkingFeeService pfc;
     private ParkingSessionRepository parkingSessionRepository = new ParkingSessionRepositoryImpl();
 
-    //在儲存時間可以改的可讀性更高 不要有T
     @BeforeEach
     void setUp(){
         pfc = new CalculateParkingFeeService(new PriceBookRepositoryImpl(new PriceBook()),parkingSessionRepository);
