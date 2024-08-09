@@ -11,7 +11,9 @@ import java.util.Set;
 
 public class PriceBook {
     public PriceBook() {
-        nationalHolidays.add(LocalDate.of(2024,01,01));
+        nationalHolidays.add(LocalDate.of(2024, 1,1));
+        nationalHolidays.add(LocalDate.of(2024,2,28));
+        nationalHolidays.add(LocalDate.of(2024,10,10));
     }
     private Duration THIRTY_MINUTES = Duration.ofMinutes(30L);
     private Set<LocalDate> nationalHolidays = new HashSet<>();
