@@ -8,7 +8,6 @@ import java.util.Map;
 
 public class ParkingSessionRepositoryImpl implements ParkingSessionRepository {
 
-    private Map<String,ParkingSession> parkingSessionsOld = new HashMap<>();
     private Map<String,ParkingSessionPO> parkingSession = new HashMap<>();
     public ParkingSessionRepositoryImpl() {
 
@@ -25,7 +24,6 @@ public class ParkingSessionRepositoryImpl implements ParkingSessionRepository {
                 : pSession.getEnd().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
 
         parkingSession.put(pSession.getPlate(),parkingSessionPO);
-        parkingSessionsOld.put(pSession.getPlate(),pSession);
     }
 
     @Override
@@ -44,6 +42,5 @@ public class ParkingSessionRepositoryImpl implements ParkingSessionRepository {
                     : LocalDateTime.ofInstant(Instant.ofEpochMilli(parkingSessionPO.getEnd()), ZoneId.systemDefault()));
 
         return parkingSession;
-        //return parkingSessionsOld.get(plate);
     }
 }
