@@ -16,15 +16,11 @@ public class ParkingSessionRepositoryImpl implements ParkingSessionRepository {
     @Override
     public void save(ParkingSession pSession) {
 
-        ParkingSessionPO parkingSessionPO = new ParkingSessionPO();
-        parkingSessionPO.setPlate(pSession.getPlate());
-        parkingSessionPO.setStart(pSession.getStart().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
-        parkingSessionPO.setEnd(pSession.getEnd() == null
-                ? null
-                : pSession.getEnd().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
-
+        ParkingSessionPO parkingSessionPO = ParkingSessionPO.getParkSessionPO(pSession);
         parkingSession.put(pSession.getPlate(),parkingSessionPO);
     }
+
+
 
     @Override
     public ParkingSession find(String plate) {
@@ -33,14 +29,9 @@ public class ParkingSessionRepositoryImpl implements ParkingSessionRepository {
         if(parkingSessionPO == null) {
             return null;
         }
-
-        ParkingSession parkingSession = new ParkingSession(
-                parkingSessionPO.getPlate(),
-                LocalDateTime.ofInstant(Instant.ofEpochMilli(parkingSessionPO.getStart()), ZoneId.systemDefault()),
-                parkingSessionPO.getEnd() == null
-                    ? null
-                    : LocalDateTime.ofInstant(Instant.ofEpochMilli(parkingSessionPO.getEnd()), ZoneId.systemDefault()));
-
+        ParkingSession parkingSession = parkingSessionPO.toEntity(parkingSessionPO);
         return parkingSession;
     }
+
+
 }
