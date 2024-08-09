@@ -4,11 +4,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @SpringBootTest
 class ParkingApplicationTests {
@@ -17,7 +13,7 @@ class ParkingApplicationTests {
     private CalculateParkingFeeService pfc;
     private ParkingSessionRepository parkingSessionRepository = new ParkingSessionRepositoryImpl();
 
-
+    //在儲存時間可以改的可讀性更高 不要有T
     @BeforeEach
     void setUp(){
         pfc = new CalculateParkingFeeService(new PriceBookRepositoryImpl(new PriceBook()),parkingSessionRepository);
@@ -143,7 +139,7 @@ class ParkingApplicationTests {
 
         carDriveIn("2024-01-06T00:00:00", "ABC-8888");
         carDriveOut("2024-01-06T00:15:01","ABC-8888");
-        calculated(null);
+        calculated("VIP-6666");
         shouldPay(0L);
     }
 
