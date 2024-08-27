@@ -11,8 +11,6 @@ public class CalculateParkingFeeService {
 
     public CalculateParkingFeeService() {
 
-
-
     }
 
     public CalculateParkingFeeService(PriceBookRepository priceBookRepository, ParkingSessionRepository parkingSessionRepository){
